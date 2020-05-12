@@ -94,15 +94,95 @@ def transcription(dna_strand):
         else:
             print("Invalid DNA strand.")
             break
+    return mRNA_strand
     if len(mRNA_strand) == len(original_strand):
         print("mRNA strand: %s" % (mRNA_strand))
     else:
         print("Transcription process aborted..")
     
-transcription("dna_test_sequence.txt")
-
-
+#transcription("dna_test_sequence.txt")
 
 # Method for translation of mRNA to polypeptide chain
-def translation(mrna_strand):
-    pass
+def translation(dna_strand):
+    mRNA_data = transcription(dna_strand)    
+    codons = []
+    for i in range(0, (len(mRNA_data))):
+        if (i + 3) <= len(mRNA_data):
+            codons.append(mRNA_data[i:(i+3)])
+    print(codons)
+    counter = 0
+    for codon in codons:
+        new_condons = []        
+        print("Checking for start codon..")
+        # AUG corresponding to start using Met
+        if codon == "AUG":
+            print("Start codon found!")
+            for i in range(counter, (len(codons)), 3):
+                if i <= len(mRNA_data):
+                    new_condons.append(codons[i])       
+            print(new_condons)
+            break
+        else:
+            counter += 1
+    
+    # mRNA condons corresponding to Amino acid
+    AA_dict = {
+        "UUU": "Phe", "UUC": "Phe", "UUA": "Leu", "UUG": "Leu",
+        "UCU": "Ser", "UCC": "Ser", "UCA": "Ser", "UCG": "Ser",
+        "UAU": "Tyr", "UAC": "Tyr", "UAA": "Stop", "UAG": "Stop",
+        "UGU": "Cys", "UGC": "Cys", "UGA": "Stop", "UGG": "Trp",
+        "CUU": "Leu", "CUC": "Leu", "CUA": "Leu", "CUG": "Leu",
+        "CCU": "Pro", "CCC": "Pro", "CCA": "Pro", "CCG": "Pro",
+        "CAU": "His", "CAC": "His", "CAA": "Gln", "CAG": "Gln",
+        "CGU": "Arg", "CGC": "Arg", "CGA": "Arg", "CGG": "Arg",
+        "AUU": "Ile", "AUC": "Ile", "AUA": "Ile", "AUG": "Met",
+        "ACU": "Thr", "ACC": "Thr", "ACA": "Thr", "ACG": "Thr",
+        "AAU": "Asn", "AAC": "Asn", "AAA": "Lys", "AAG": "Lys",
+        "AGU": "Ser", "AGC": "Ser", "AGA": "Arg", "AGG": "Arg",
+        "GUU": "Val", "GUC": "Val", "GUA": "Val", "GUG": "Val",
+        "GCU": "Ala", "GCC": "Ala", "GCA": "Ala", "GCG": "Ala",
+        "GAU": "Asp", "GAC": "Asp", "GAA": "Glu", "GAG": "Glu",
+        "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly"
+        }
+
+    AA_list = []
+    for codon in new_condons:
+        x = AA_dict.get(codon)
+        if x != "Stop":
+            AA_list.append(x)
+        else:
+            break
+            
+    print(AA_list)
+    
+#translation("dna_test_sequence.txt")
+
+def create_dna(total):
+   # from numpy import random
+    from numpy import random
+    x = random.choice(["A", "T", "C", "G"], p=[0.25, 0.25, 0.25, 0.25], size=(total))
+    dna_string = ""
+    for item in x:
+        dna_string += item
+
+    print(dna_string)
+
+    # check if file already exists, deete it if it does
+    import os
+    if os.path.exists("random_dna.txt"):
+        print("Removing old DNA file...")
+        os.remove("random_dna.txt")
+    else:
+        print("DNA file does not exist")
+
+    # create dna file
+    print("Creating new DNA file with %s random base codes..." % (total))
+    f = open("random_dna.txt", "x")
+
+    f = open("random_dna.txt", "a")
+    f.write(dna_string)
+    f.close()
+    print("DNA file with %s random base codes created!" % (total))
+
+create_dna(100)
+
