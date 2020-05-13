@@ -59,32 +59,36 @@ def is_criminal(dna_sample):
 # Method for DNA replication
 def replication(dna_strand):
     original_strand = read_dna(dna_strand)
-    #print(ladder1)
-    opposite_strand = ""
-    for i in original_strand:
-        if i == "A":
-            opposite_strand += "T"
-        elif i == "T":
-            opposite_strand += "A"
-        elif i == "C":
-            opposite_strand += "G"
-        elif i == "G":
-            opposite_strand += "C"
-        elif i =="U":
-            print("This is an RNA strand not DNA!")
-            break
+    print(read_dna.exist)
+    if read_dna.exist == True:
+    
+        opposite_strand = ""
+        for i in original_strand:
+            if i == "A":
+                opposite_strand += "T"
+            elif i == "T":
+                opposite_strand += "A"
+            elif i == "C":
+                opposite_strand += "G"
+            elif i == "G":
+                opposite_strand += "C"
+            elif i =="U":
+                print("This is an RNA strand not DNA!")
+                break
+            else:
+                print("Invalid DNA strand.")
+                break
+        #return opposite_strand
+        if len(opposite_strand) == len(original_strand):
+            print("                 " + "-" * len(original_strand))
+            print("Original strand: %s" % (original_strand))
+            print("                 " + "|" * len(original_strand))
+            print("Opposite strand: %s" % (opposite_strand))
+            print("                 " + "-" * len(original_strand))
         else:
-            print("Invalid DNA strand.")
-            break
-    #return opposite_strand
-    if len(opposite_strand) == len(original_strand):
-        print("                 " + "-" * len(original_strand))
-        print("Original strand: %s" % (original_strand))
-        print("                 " + "|" * len(original_strand))
-        print("Opposite strand: %s" % (opposite_strand))
-        print("                 " + "-" * len(original_strand))
+            print("Replication process aborted..")
     else:
-        print("Replication process aborted..")
+        print("file incorrect")
 
 #replication("suspect2.txt")
 #replication("dna_test_sequence.txt")
@@ -257,6 +261,9 @@ def start_analysis():
             sleep(5)
         elif user_choice == "2":
             print("DNA Replication")
+            sleep(5)
+            replication_file = input("Enter DNA you wish to replicate: ")
+            replication(replication_file)
             sleep(5)
         elif user_choice == "3":
             print("DNA Transcription")
