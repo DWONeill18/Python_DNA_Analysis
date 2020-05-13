@@ -1,6 +1,6 @@
 # DNA analysis
 from time import sleep
-sample = ["GTA", "GGG", "CAC"]
+#sample = ["GTA", "GGG", "CAC"]
 
 # Method to take a file, read it, add it's contents to an empty string and return the updated string.
 def read_dna(dna_file):
@@ -30,6 +30,8 @@ def dna_condons(dna):
 # Method to iterate through both the sample and suspect's DNA.
 def match_dna(dna):
     matches = 0
+    sample = []
+    sample = input("Enter condon samples(e.g AAA, TTT, GGG): ")
     for condon in dna:
         if condon in sample:
             matches += 1
@@ -42,10 +44,16 @@ def is_criminal(dna_sample):
     if read_dna.exist == True:
         condons = dna_condons(dna_data)
         num_matches = match_dna(condons)
-        if num_matches >= 3:
-            print("%s matches found. Carry on the investigation." % (num_matches))
+        chosen_matches = input("Minimum number of matches for investigation: ")
+        if (chosen_matches.isdigit()) ==  True:
+            chosen_matches = int(chosen_matches)
+            if num_matches >= chosen_matches:
+                print("%s matches found. Carry on the investigation." % (num_matches))
+            else:
+                print("%s matches found. Free the suspect." % (num_matches))
         else:
-            print("%s matches found. Free the suspect." % (num_matches))
+            print("not a number")
+
     else:
         print("file incorrect")
     
