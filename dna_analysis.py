@@ -1,15 +1,24 @@
 # DNA analysis
-
+from time import sleep
 sample = ["GTA", "GGG", "CAC"]
 
 # Method to take a file, read it, add it's contents to an empty string and return the updated string.
 def read_dna(dna_file):
-    dna_data = ""
-    with open(dna_file, "r") as f:
-        for line in f:
-            dna_data += line
-    return dna_data
-
+    # check if file already exists, delete if exists
+    import os
+    if os.path.exists(dna_file):
+        print("File exists")
+        read_dna.exist = True 
+        dna_data = ""
+        with open(dna_file, "r") as f:
+            for line in f:
+                dna_data += line
+        return dna_data
+        print("Read file")             
+    else:
+        print("File does not exist")
+        read_dna.exist = False
+        
 # Method to take a string, create a list of condons and return the list.
 def dna_condons(dna):
     condons = []
@@ -29,12 +38,17 @@ def match_dna(dna):
 # Method to check whether sample matches suspect dna
 def is_criminal(dna_sample):
     dna_data = read_dna(dna_sample)
-    condons = dna_condons(dna_data)
-    num_matches = match_dna(condons)
-    if num_matches >= 3:
-        print("%s matches found. Carry on the investigation." % (num_matches))
+    print(read_dna.exist)
+    if read_dna.exist == True:
+        condons = dna_condons(dna_data)
+        num_matches = match_dna(condons)
+        if num_matches >= 3:
+            print("%s matches found. Carry on the investigation." % (num_matches))
+        else:
+            print("%s matches found. Free the suspect." % (num_matches))
     else:
-        print("%s matches found. Free the suspect." % (num_matches))
+        print("file incorrect")
+    
 
 #is_criminal("suspect1.txt")
 #is_criminal("suspect2.txt")
@@ -77,29 +91,61 @@ def replication(dna_strand):
 
 # Method for DNA transcription
 def transcription(dna_strand):
+    print("Starting transcription method..")
+    sleep(3)
     original_strand = read_dna(dna_strand)
+    print("Test line")
+    print(original_strand)
     mRNA_strand = ""
+    print(mRNA_strand)
     for i in original_strand:
         if i == "A":
             mRNA_strand += "U"
+            print(mRNA_strand)
         elif i == "T":
             mRNA_strand += "A"
+            print(mRNA_strand)
         elif i == "C":
             mRNA_strand += "G"
+            print(mRNA_strand)
         elif i == "G":
             mRNA_strand += "C"
+            print(mRNA_strand)
         elif i =="U":
             print("This is an RNA strand not DNA!")
             break
         else:
             print("Invalid DNA strand.")
             break
-    return mRNA_strand
+    #return mRNA_strand
     if len(mRNA_strand) == len(original_strand):
         print("mRNA strand: %s" % (mRNA_strand))
     else:
         print("Transcription process aborted..")
-    
+
+    # write string to file
+    # check if file already exists, delete if exists
+    import os
+    if os.path.exists("transcribed_mRNA.txt"):
+        print("Removing old mRNA file...")
+        sleep(3)
+        os.remove("transcribed_mRNA.txt")
+    else:
+        print("mRNA file does not already exist")
+
+    # create mRNA file
+    print("Transcribing DNA strand to mRNA...")
+    sleep(3)
+    print("Creating mRNA file...")
+    sleep(3)
+    f = open("transcribed_mRNA.txt", "x")
+
+    # write mRNA to file
+    f = open("transcribed_mRNA.txt", "a")
+    f.write(mRNA_strand)
+    f.close()
+    print("mRNA file created!")
+
 #transcription("dna_test_sequence.txt")
 
 # Method for translation of mRNA to polypeptide chain
@@ -167,7 +213,7 @@ def create_dna(total):
 
     print(dna_string)
 
-    # check if file already exists, deete it if it does
+    # check if file already exists, delete if exists
     import os
     if os.path.exists("random_dna.txt"):
         print("Removing old DNA file...")
@@ -179,10 +225,55 @@ def create_dna(total):
     print("Creating new DNA file with %s random base codes..." % (total))
     f = open("random_dna.txt", "x")
 
+    # write dna to file
     f = open("random_dna.txt", "a")
     f.write(dna_string)
     f.close()
     print("DNA file with %s random base codes created!" % (total))
 
-create_dna(100)
+#create_dna(100)
 
+
+
+def welcome():
+    print("Hello and welcome to the DNA lab!")
+    sleep(2)
+    print("Lab services are online")
+    sleep(2)
+    print("What service would you like to use?")
+
+def start_analysis():
+    welcome()
+    start = True
+    while start:
+        print("1) DNA Match \n2) DNA Replication \n3) DNA Transcription \n4) DNA Translation \n5) Random DNA Generator \n6) Exit")
+        user_choice = input("Enter choice: ")
+    
+        if user_choice == "1":
+            print("DNA Match")
+            sleep(5)
+            dna_file = input("Enter suspect DNA file: ")
+            is_criminal(dna_file)
+            sleep(5)
+        elif user_choice == "2":
+            print("DNA Replication")
+            sleep(5)
+        elif user_choice == "3":
+            print("DNA Transcription")
+            sleep(5)
+        elif user_choice == "4":
+            print("DNA Translation")
+            sleep(5)
+        elif user_choice == "5":
+            print("Random DNA Generator")
+            sleep(5)
+        elif user_choice == "6":
+            print("Closing down the lab..")
+            sleep(3)
+            print("...")
+            sleep(3)
+            start = False
+        else:
+            print("Invalid input")
+
+start_analysis()
