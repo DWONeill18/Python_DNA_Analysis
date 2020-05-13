@@ -98,57 +98,61 @@ def transcription(dna_strand):
     print("Starting transcription method..")
     sleep(3)
     original_strand = read_dna(dna_strand)
-    print("Test line")
-    print(original_strand)
-    mRNA_strand = ""
-    print(mRNA_strand)
-    for i in original_strand:
-        if i == "A":
-            mRNA_strand += "U"
-            print(mRNA_strand)
-        elif i == "T":
-            mRNA_strand += "A"
-            print(mRNA_strand)
-        elif i == "C":
-            mRNA_strand += "G"
-            print(mRNA_strand)
-        elif i == "G":
-            mRNA_strand += "C"
-            print(mRNA_strand)
-        elif i =="U":
-            print("This is an RNA strand not DNA!")
-            break
+    if read_dna.exist == True:
+        print("Test line")
+        print(original_strand)
+        mRNA_strand = ""
+        print(mRNA_strand)
+        for i in original_strand:
+            if i == "A":
+                mRNA_strand += "U"
+                print(mRNA_strand)
+            elif i == "T":
+                mRNA_strand += "A"
+                print(mRNA_strand)
+            elif i == "C":
+                mRNA_strand += "G"
+                print(mRNA_strand)
+            elif i == "G":
+                mRNA_strand += "C"
+                print(mRNA_strand)
+            elif i =="U":
+                print("This is an RNA strand not DNA!")
+                break
+            else:
+                print("Invalid DNA strand.")
+                break
+        #return mRNA_strand
+        if len(mRNA_strand) == len(original_strand):
+            print("mRNA strand: %s" % (mRNA_strand))
         else:
-            print("Invalid DNA strand.")
-            break
-    #return mRNA_strand
-    if len(mRNA_strand) == len(original_strand):
-        print("mRNA strand: %s" % (mRNA_strand))
-    else:
-        print("Transcription process aborted..")
+            print("Transcription process aborted..")
 
-    # write string to file
-    # check if file already exists, delete if exists
-    import os
-    if os.path.exists("transcribed_mRNA.txt"):
-        print("Removing old mRNA file...")
+        # write string to file
+        # check if file already exists, delete if exists
+        import os
+        if os.path.exists("transcribed_mRNA.txt"):
+            print("Removing old mRNA file...")
+            sleep(3)
+            os.remove("transcribed_mRNA.txt")
+        else:
+            print("mRNA file does not already exist")
+
+        # create mRNA file
+        print("Transcribing DNA strand to mRNA...")
         sleep(3)
-        os.remove("transcribed_mRNA.txt")
+        print("Creating mRNA file...")
+        sleep(3)
+        f = open("transcribed_mRNA.txt", "x")
+
+        # write mRNA to file
+        f = open("transcribed_mRNA.txt", "a")
+        f.write(mRNA_strand)
+        f.close()
+        print("mRNA file created!")
+
     else:
-        print("mRNA file does not already exist")
-
-    # create mRNA file
-    print("Transcribing DNA strand to mRNA...")
-    sleep(3)
-    print("Creating mRNA file...")
-    sleep(3)
-    f = open("transcribed_mRNA.txt", "x")
-
-    # write mRNA to file
-    f = open("transcribed_mRNA.txt", "a")
-    f.write(mRNA_strand)
-    f.close()
-    print("mRNA file created!")
+        print("Invalid file")
 
 #transcription("dna_test_sequence.txt")
 
@@ -262,11 +266,14 @@ def start_analysis():
         elif user_choice == "2":
             print("DNA Replication")
             sleep(5)
-            replication_file = input("Enter DNA you wish to replicate: ")
+            replication_file = input("Enter DNA file you wish to replicate: ")
             replication(replication_file)
             sleep(5)
         elif user_choice == "3":
             print("DNA Transcription")
+            sleep(5)
+            transcription_file = input("Enter DNA file you wish to transcription: ")
+            transcription(transcription_file)
             sleep(5)
         elif user_choice == "4":
             print("DNA Translation")
