@@ -218,8 +218,8 @@ def translation(dna_strand):
 #translation("dna_test_sequence.txt")
 
 def create_dna(total):
-   # from numpy import random
     from numpy import random
+    total = int(total)
     x = random.choice(["A", "T", "C", "G"], p=[0.25, 0.25, 0.25, 0.25], size=(total))
     dna_string = ""
     for item in x:
@@ -290,6 +290,14 @@ def start_analysis():
         elif user_choice == "5":
             print("Random DNA Generator")
             sleep(5)
+            total = input("Enter number total number of bases in DNA: ")
+            from math import floor
+            if (total.isdigit()):
+                create_dna(total)
+                sleep(5)
+            else:
+                print("Total is not an integer!")
+                
         elif user_choice == "6":
             print("Closing down the lab..")
             sleep(3)
