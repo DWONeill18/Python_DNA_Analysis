@@ -158,57 +158,63 @@ def transcription(dna_strand):
 
 # Method for translation of mRNA to polypeptide chain
 def translation(dna_strand):
-    mRNA_data = transcription(dna_strand)    
-    codons = []
-    for i in range(0, (len(mRNA_data))):
-        if (i + 3) <= len(mRNA_data):
-            codons.append(mRNA_data[i:(i+3)])
-    print(codons)
-    counter = 0
-    for codon in codons:
-        new_condons = []        
-        print("Checking for start codon..")
-        # AUG corresponding to start using Met
-        if codon == "AUG":
-            print("Start codon found!")
-            for i in range(counter, (len(codons)), 3):
-                if i <= len(mRNA_data):
-                    new_condons.append(codons[i])       
-            print(new_condons)
-            break
-        else:
-            counter += 1
-    
-    # mRNA condons corresponding to Amino acid
-    AA_dict = {
-        "UUU": "Phe", "UUC": "Phe", "UUA": "Leu", "UUG": "Leu",
-        "UCU": "Ser", "UCC": "Ser", "UCA": "Ser", "UCG": "Ser",
-        "UAU": "Tyr", "UAC": "Tyr", "UAA": "Stop", "UAG": "Stop",
-        "UGU": "Cys", "UGC": "Cys", "UGA": "Stop", "UGG": "Trp",
-        "CUU": "Leu", "CUC": "Leu", "CUA": "Leu", "CUG": "Leu",
-        "CCU": "Pro", "CCC": "Pro", "CCA": "Pro", "CCG": "Pro",
-        "CAU": "His", "CAC": "His", "CAA": "Gln", "CAG": "Gln",
-        "CGU": "Arg", "CGC": "Arg", "CGA": "Arg", "CGG": "Arg",
-        "AUU": "Ile", "AUC": "Ile", "AUA": "Ile", "AUG": "Met",
-        "ACU": "Thr", "ACC": "Thr", "ACA": "Thr", "ACG": "Thr",
-        "AAU": "Asn", "AAC": "Asn", "AAA": "Lys", "AAG": "Lys",
-        "AGU": "Ser", "AGC": "Ser", "AGA": "Arg", "AGG": "Arg",
-        "GUU": "Val", "GUC": "Val", "GUA": "Val", "GUG": "Val",
-        "GCU": "Ala", "GCC": "Ala", "GCA": "Ala", "GCG": "Ala",
-        "GAU": "Asp", "GAC": "Asp", "GAA": "Glu", "GAG": "Glu",
-        "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly"
-        }
-
-    AA_list = []
-    for codon in new_condons:
-        x = AA_dict.get(codon)
-        if x != "Stop":
-            AA_list.append(x)
-        else:
-            break
+    #mRNA_data = transcription(dna_strand)
+    mRNA_data = read_dna(dna_strand)
+    if read_dna.exist == True:
+        
+        codons = []
+        for i in range(0, (len(mRNA_data))):
+            if (i + 3) <= len(mRNA_data):
+                codons.append(mRNA_data[i:(i+3)])
+        print(codons)
+        counter = 0
+        for codon in codons:
+            new_condons = []        
+            print("Checking for start codon..")
+            # AUG corresponding to start using Met
+            if codon == "AUG":
+                print("Start codon found!")
+                for i in range(counter, (len(codons)), 3):
+                    if i <= len(mRNA_data):
+                        new_condons.append(codons[i])       
+                print(new_condons)
+                break
+            else:
+                counter += 1
             
-    print(AA_list)
-    
+        # mRNA condons corresponding to Amino acid
+        AA_dict = {
+                "UUU": "Phe", "UUC": "Phe", "UUA": "Leu", "UUG": "Leu",
+                "UCU": "Ser", "UCC": "Ser", "UCA": "Ser", "UCG": "Ser",
+                "UAU": "Tyr", "UAC": "Tyr", "UAA": "Stop", "UAG": "Stop",
+                "UGU": "Cys", "UGC": "Cys", "UGA": "Stop", "UGG": "Trp",
+                "CUU": "Leu", "CUC": "Leu", "CUA": "Leu", "CUG": "Leu",
+                "CCU": "Pro", "CCC": "Pro", "CCA": "Pro", "CCG": "Pro",
+                "CAU": "His", "CAC": "His", "CAA": "Gln", "CAG": "Gln",
+                "CGU": "Arg", "CGC": "Arg", "CGA": "Arg", "CGG": "Arg",
+                "AUU": "Ile", "AUC": "Ile", "AUA": "Ile", "AUG": "Met",
+                "ACU": "Thr", "ACC": "Thr", "ACA": "Thr", "ACG": "Thr",
+                "AAU": "Asn", "AAC": "Asn", "AAA": "Lys", "AAG": "Lys",
+                "AGU": "Ser", "AGC": "Ser", "AGA": "Arg", "AGG": "Arg",
+                "GUU": "Val", "GUC": "Val", "GUA": "Val", "GUG": "Val",
+                "GCU": "Ala", "GCC": "Ala", "GCA": "Ala", "GCG": "Ala",
+                "GAU": "Asp", "GAC": "Asp", "GAA": "Glu", "GAG": "Glu",
+                "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly"
+                }
+
+        AA_list = []
+        for codon in new_condons:
+            x = AA_dict.get(codon)
+            if x != "Stop":
+                AA_list.append(x)
+            else:
+                break
+                    
+        print(AA_list)
+    else:
+        print("file is invalid")
+
+#translation("transcribed_mRNA.txt")
 #translation("dna_test_sequence.txt")
 
 def create_dna(total):
@@ -277,6 +283,9 @@ def start_analysis():
             sleep(5)
         elif user_choice == "4":
             print("DNA Translation")
+            sleep(5)
+            translation_file = input("Enter mRNA file you wish to translate to Amino Acids: ")
+            translation(translation_file)
             sleep(5)
         elif user_choice == "5":
             print("Random DNA Generator")
