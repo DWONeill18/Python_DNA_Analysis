@@ -1,5 +1,6 @@
 # DNA analysis
 from time import sleep
+from numpy.random.mtrand import randint
 #sample = ["GTA", "GGG", "CAC"]
 
 # Method to take a file, read it, add it's contents to an empty string and return the updated string.
@@ -255,20 +256,39 @@ def create_dna(total):
 
 #create_dna(100)
 
+def mutation(dna_strand):
+    new_dna = read_dna(dna_strand)
+    if read_dna.exist == True:
+        from numpy import random
+        x = random.choice(["A", "T", "C", "G"])
+        y = randint(len(new_dna))
+        print(new_dna[:y] + x + new_dna[y:])
+    else:
+        print("file is invalid")
 
+#mutation("suspect2.txt")
 
 def welcome():
-    print("Hello and welcome to the DNA lab!")
+    print("############################################")
+    print("##### DNA Lab Analysis -- Version 2.13 #####")
+    print("############################################")
+    print("############################################")
+    print("##### Welcome to the DNA lab! ##############")
     sleep(2)
+    print("############################################")
     print("Lab services are online")
+    print("############################################")
     sleep(2)
-    print("What service would you like to use?")
+    print("############################################")
+    print("### Which service would you like to use? ###")
+    print("############################################")
 
 def start_analysis():
     welcome()
     start = True
     while start:
-        print("1) DNA Match \n2) DNA Replication \n3) DNA Transcription \n4) DNA Translation \n5) Random DNA Generator \n6) Exit")
+        print("1) DNA Match \n2) DNA Replication \n3) DNA Transcription \n4) DNA Translation" + 
+        "\n5) Random DNA Generator \n6) Random DNA Mutation \n7) Exit")
         user_choice = input("Enter choice: ")
     
         if user_choice == "1":
@@ -305,8 +325,13 @@ def start_analysis():
                 sleep(5)
             else:
                 print("Total is not an integer!")
-                
         elif user_choice == "6":
+            print("Random Mutation")
+            sleep(3)
+            mutation_file = input("Enter DNA file you wish to mutate: ")
+            mutation(mutation_file)
+            sleep(3)         
+        elif user_choice == "7":
             print("Closing down the lab..")
             sleep(3)
             print("...")
