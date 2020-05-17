@@ -1,0 +1,5 @@
+                 ---------
+Original strand: GTAGGGCAC
+                 |||||||||
+Opposite strand: CATCCCGTG
+                 ---------
