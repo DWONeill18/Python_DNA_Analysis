@@ -1,13 +1,13 @@
 # DNA analysis
+from numpy import random
+from random import randint
 from time import sleep
-from numpy.random.mtrand import randint, random
 import os
 
-# Method to take a file, read it, add it's contents to an empty string and return the updated string.
+# Method to take a file, read it, add it's contents to an empty string and return the updated string
 def read_dna(dna_file):
-    # check if file already exists, delete if exists    
-    if os.path.exists(dna_file):
-        print("File exists")
+    # check if file exists and read it   
+    if os.path.exists(dna_file):        
         read_dna.exist = True 
         dna_data = ""
         with open(dna_file, "r") as f:
@@ -19,6 +19,7 @@ def read_dna(dna_file):
         print("File does not exist")
         read_dna.exist = False
 
+# Method to check if a file exists, writes output to file
 def write_file(data):
     # check if file already exists, delete if exists
     filename = input("Enter filename: ")
@@ -38,7 +39,7 @@ def write_file(data):
     f.close()
     print("File created!")
 
-# Method to take a string, create a list of condons and return the list.
+# Method to take a string, create a list of condons and return the list
 def dna_condons(dna):
     condons = []
     for i in range(0, (len(dna)), 3):
@@ -46,7 +47,7 @@ def dna_condons(dna):
             condons.append(dna[i:(i+3)])
     return condons
 
-# Method to iterate through both the sample and suspect's DNA.
+# Method to iterate through both the sample and suspect's DNA
 def match_dna(dna):
     matches = 0
     sample = []
@@ -56,10 +57,9 @@ def match_dna(dna):
             matches += 1
     return matches
 
-# Method to check whether sample matches suspect dna
+# Method to check whether sample matches suspect DNA
 def is_criminal(dna_sample):
     dna_data = read_dna(dna_sample)
-    print(read_dna.exist)
     if read_dna.exist == True:
         condons = dna_condons(dna_data)
         num_matches = match_dna(condons)
@@ -70,22 +70,19 @@ def is_criminal(dna_sample):
                 data = "%s matches found. Carry on the investigation." % (num_matches)
                 print(data)
                 write_file(data)
-
             else:
-                print("%s matches found. Free the suspect." % (num_matches))
-            
+                print("%s matches found. Free the suspect." % (num_matches))            
         else:
             print("Invalid input. Not an integer.")
-
     else:
         print("File does not exist.")
     
 # Method for DNA replication
 def replication(dna_strand):
+    print("Starting replication process..")
+    sleep(3)
     original_strand = read_dna(dna_strand)
-    print(read_dna.exist)
-    if read_dna.exist == True:
-    
+    if read_dna.exist == True:    
         opposite_strand = ""
         for i in original_strand:
             if i == "A":
@@ -221,6 +218,7 @@ def translation(dna_strand):
 # Method to create a single strand of DNA with a given numebr of bases
 def create_dna(total):    
     total = int(total)
+    
     x = random.choice(["A", "T", "C", "G"], p=[0.25, 0.25, 0.25, 0.25], size=(total))
     dna_string = ""
     for item in x:
@@ -263,7 +261,7 @@ def start_analysis():
     start = True
     while start:
         print("1) DNA Match \n2) DNA Replication \n3) DNA Transcription \n4) DNA Translation" + 
-        "\n5) Random DNA Generator \n6) Random DNA Mutation \n7) Exit")
+        "\n5) Random DNA Generator \n6) Random DNA Mutation \n7) Information \n8) Exit")
         user_choice = input("Enter choice: ")
     
         if user_choice == "1":
@@ -305,8 +303,18 @@ def start_analysis():
             sleep(3)
             mutation_file = input("Enter DNA file you wish to mutate: ")
             mutation(mutation_file)
-            sleep(3)         
+            sleep(3)
         elif user_choice == "7":
+            print("Option Information" + "\n" +
+             "\n1) DNA Match - Check whether suspect matches smaple DNA" +
+             "\n2) DNA Replication - Replicate a DNA strand to give both it's original and complemetary strands" +
+             "\n3) DNA Transcription - Transcribe a DNA strand to its mRNA counterpart"
+             "\n4) mRNA Translation - Translate an mRNA strand to amino acids in a polypeptide chain" +
+             "\n5) Random DNA Generator - Create a random DNA strand given a number of DNA bases" +
+             "\n6) Random DNA Mutation - Insert a random DNA base into a DNA strand to cause a mutation" +
+             "\n" +
+             "\n")         
+        elif user_choice == "8":
             print("Closing down the lab..")
             sleep(3)
             print("...")
