@@ -22,13 +22,14 @@ def read_dna(dna_file):
 # Method to check if a file exists, writes output to file
 def write_file(data):
     # check if file already exists, delete if exists
-    filename = input("Enter filename: ")
+    filename = input("Enter filename to write output to: ")
     if os.path.exists(filename):
         print("Removing old file...")
         sleep(3)
         os.remove(filename)
     else:
-        print("%s does not exist." % (filename))
+        pass
+        #print("%s does not exist." % (filename))
     # create file
     print("Creating new file...")
     sleep(3)
@@ -126,16 +127,16 @@ def transcription(dna_strand):
         for i in original_strand:
             if i == "A":
                 mRNA_strand += "U"
-                print(mRNA_strand)
+                #print(mRNA_strand)
             elif i == "T":
                 mRNA_strand += "A"
-                print(mRNA_strand)
+                #print(mRNA_strand)
             elif i == "C":
                 mRNA_strand += "G"
-                print(mRNA_strand)
+                #print(mRNA_strand)
             elif i == "G":
                 mRNA_strand += "C"
-                print(mRNA_strand)
+                #print(mRNA_strand)
             elif i =="U":
                 print("This is an RNA strand not DNA!")
                 break
@@ -166,18 +167,19 @@ def translation(dna_strand):
         for i in range(0, (len(mRNA_data))):
             if (i + 3) <= len(mRNA_data):
                 codons.append(mRNA_data[i:(i+3)])
-        print(codons)
+        #print(codons)
+        print("Checking for start codon..")
         counter = 0
         for codon in codons:
             new_condons = []        
-            print("Checking for start codon..")
+            
             # AUG corresponding to start using Met
             if codon == "AUG":
                 print("Start codon found!")
                 for i in range(counter, (len(codons)), 3):
                     if i <= len(mRNA_data):
                         new_condons.append(codons[i])       
-                print(new_condons)
+                #print(new_condons)
                 break
             else:
                 counter += 1
@@ -202,16 +204,21 @@ def translation(dna_strand):
                 "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly"
                 }
 
-        AA_list = []
+        #AA_list = []
+        AA = ""
         for codon in new_condons:
             x = AA_dict.get(codon)
             if x != "Stop":
-                AA_list.append(x)
+                #AA_list.append(x)
+                AA += (x + " ")
             else:
                 break
                     
-        print(AA_list)
-        write_file(AA_list)
+        print(AA)
+        # need to convert list to string
+
+
+        write_file(AA)
     else:
         print("File is invalid.")
 
@@ -233,7 +240,7 @@ def mutation(dna_strand):
     if read_dna.exist == True:
         from numpy import random
         x = random.choice(["A", "T", "C", "G"])
-        y = randint(len(new_dna))
+        y = randint(0, len(new_dna))
         mutated_dna = new_dna[:y] + x + new_dna[y:]
         print(mutated_dna)
         write_file(mutated_dna)
@@ -279,7 +286,7 @@ def start_analysis():
         elif user_choice == "3":
             print("DNA Transcription")
             sleep(5)
-            transcription_file = input("Enter DNA file you wish to transcription: ")
+            transcription_file = input("Enter DNA file you wish to transcribe: ")
             transcription(transcription_file)
             sleep(5)
         elif user_choice == "4":
