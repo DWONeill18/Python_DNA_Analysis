@@ -4,6 +4,10 @@ from random import randint
 from time import sleep
 import os
 
+#######################
+## File Manipulation ##
+#######################
+
 # Method to take a file, read it, add it's contents to an empty string and return the updated string
 def read_dna(dna_file):
     # check if file exists and read it   
@@ -40,6 +44,10 @@ def write_file(data):
     f.close()
     print("File created!")
 
+#################
+## Sub Methods ##
+#################
+
 # Method to take a string, create a list of condons and return the list
 def dna_condons(dna):
     condons = []
@@ -57,6 +65,10 @@ def match_dna(dna):
         if condon in sample:
             matches += 1
     return matches
+
+######################
+## Analysis Methods ##
+######################
 
 # Method to check whether sample matches suspect DNA
 def is_criminal(dna_sample):
@@ -247,6 +259,9 @@ def mutation(dna_strand):
     else:
         print("File is invalid.")
 
+##########################
+## Command Line Methods ##
+##########################
 
 def welcome():
     print("############################################")
@@ -329,5 +344,9 @@ def start_analysis():
             start = False
         else:
             print("Invalid input")
+
+###################
+## Begin Program ##
+###################
 
 start_analysis()
