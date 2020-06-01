@@ -247,7 +247,7 @@ def mutation(dna_strand):
     else:
         print("File is invalid.")
 
-# Method for reverse transcription
+# Method for reverse_transcription
 def reverse_transcription(rna_strand):
     pass
 
