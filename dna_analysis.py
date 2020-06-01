@@ -304,7 +304,7 @@ def start_analysis():
     start = True
     while start:
         print("1) DNA Match \n2) DNA Replication \n3) DNA Transcription \n4) DNA Translation" + 
-        "\n5) Random DNA Generator \n6) Random DNA Mutation \n7) Information \n8) Exit")
+        "\n5) Random DNA Generator \n6) Random DNA Mutation \n7 Reverse Transcription \n8) Information \n9) Exit")
         user_choice = input("Enter choice: ")
     
         if user_choice == "1":
@@ -348,6 +348,12 @@ def start_analysis():
             mutation(mutation_file)
             sleep(3)
         elif user_choice == "7":
+            print("Reverse Transcription")
+            sleep(5)
+            transcription_file = input("Enter RNA file you wish to transcribe: ")
+            reverse_transcription(transcription_file)
+            sleep(5)
+        elif user_choice == "8":
             print("Option Information" + "\n" +
              "\n1) DNA Match - Check whether suspect matches smaple DNA" +
              "\n2) DNA Replication - Replicate a DNA strand to give both it's original and complemetary strands" +
@@ -357,7 +363,7 @@ def start_analysis():
              "\n6) Random DNA Mutation - Insert a random DNA base into a DNA strand to cause a mutation" +
              "\n" +
              "\n")         
-        elif user_choice == "8":
+        elif user_choice == "9":
             print("Closing down the lab..")
             sleep(3)
             print("...")
