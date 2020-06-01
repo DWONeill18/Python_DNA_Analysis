@@ -247,6 +247,7 @@ def mutation(dna_strand):
     else:
         print("File is invalid.")
 
+# New methods for viruses
 
 def welcome():
     print("############################################")
