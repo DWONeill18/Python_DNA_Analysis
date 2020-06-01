@@ -3,6 +3,7 @@ from numpy import random
 from random import randint
 from time import sleep
 import os
+import string
 
 # Method to take a file, read it, add it's contents to an empty string and return the updated string
 def read_dna(dna_file):
@@ -247,9 +248,41 @@ def mutation(dna_strand):
     else:
         print("File is invalid.")
 
+###################
+## Virus methods ##
+###################
+
 # Method for reverse_transcription
 def reverse_transcription(rna_strand):
-    pass
+    original_strand = read_dna(rna_strand)
+    dna_strand = ""
+    if read_dna.exists == True:
+        for base in original_strand:
+            if base == "A":
+                dna_strand += "T"
+            elif base == "U":
+                dna_strand += "A"
+            elif base == "G":
+                dna_strand+= "C"
+            elif base == "C":
+                dna_strand += "G"
+            elif base == "T":
+                print("This is not a RNA strand, but a DNA one!")
+                break
+            else:
+                print("Not a base")
+                break       
+        if len(dna_strand) == len(original_strand):
+            print("DNA strand: %s" % (dna_strand))
+            output = write_file(dna_strand)
+        else:
+            print("Transcription process aborted..")
+    else:
+        print("File is invalid!")
+
+###################
+###################
+###################
 
 def welcome():
     print("############################################")
