@@ -256,7 +256,7 @@ def mutation(dna_strand):
 def reverse_transcription(rna_strand):
     original_strand = read_dna(rna_strand)
     dna_strand = ""
-    if read_dna.exists == True:
+    if read_dna.exist == True:
         for base in original_strand:
             if base == "A":
                 dna_strand += "T"
