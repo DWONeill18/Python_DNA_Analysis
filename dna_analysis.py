@@ -357,10 +357,11 @@ def start_analysis():
             print("Option Information" + "\n" +
              "\n1) DNA Match - Check whether suspect matches smaple DNA" +
              "\n2) DNA Replication - Replicate a DNA strand to give both it's original and complemetary strands" +
-             "\n3) DNA Transcription - Transcribe a DNA strand to its mRNA counterpart"
+             "\n3) DNA Transcription - Transcribe a DNA strand to its mRNA counterpart" +
              "\n4) mRNA Translation - Translate an mRNA strand to amino acids in a polypeptide chain" +
              "\n5) Random DNA Generator - Create a random DNA strand given a number of DNA bases" +
              "\n6) Random DNA Mutation - Insert a random DNA base into a DNA strand to cause a mutation" +
+             "\n7) Reverse Transcription - Transcribe an RNA strand back to its DNA counterpart" +
              "\n" +
              "\n")         
         elif user_choice == "9":
