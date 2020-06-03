@@ -250,12 +250,22 @@ def create_dna(total):
 def mutation(dna_strand):
     new_dna = read_dna(dna_strand)
     if read_dna.exist == True:
-        from numpy import random
-        x = random.choice(["A", "T", "C", "G"])
-        y = randint(0, len(new_dna))
-        mutated_dna = new_dna[:y] + x + new_dna[y:]
-        print(mutated_dna)
-        write_file(mutated_dna)
+        base_number = input("Enter the length of base mutation: ")        
+        if(base_number.isdigit()):
+            base_number = int(base_number)
+            import random
+            x = random.choices(["A", "T", "C", "G"], k = base_number)
+            random_bases = ""
+            for item in x:
+                random_bases += item
+
+            y = randint(0, len(new_dna))
+            mutated_dna = new_dna[:y] + random_bases + new_dna[y:]
+            print("DNA output: %s" % (mutated_dna))
+            write_file(mutated_dna)
+            sleep(5)
+        else:
+            print("The length of base mutation is not an integer!")
     else:
         print("File is invalid.")
 
