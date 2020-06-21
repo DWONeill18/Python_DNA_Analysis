@@ -3,6 +3,7 @@ from numpy import random
 from random import randint
 from time import sleep
 import os
+import re
 
 #######################
 ## File Manipulation ##
@@ -56,6 +57,16 @@ def dna_condons(dna):
             condons.append(dna[i:(i+3)])
     return condons
 
+# Method to read file amd create list of codons
+def convert_to_codons(dna_file):
+    dna_data = read_dna(dna_file)
+    if read_dna.exist:
+        codons = re.findall("(\w{3})", dna_data)
+        # Last multiple of 3 is not put into list
+        print(codons)
+    else:
+        print("File is invalid.")
+
 # Method to iterate through both the sample and suspect's DNA
 def match_dna(dna):
     matches = 0
@@ -65,6 +76,29 @@ def match_dna(dna):
         if condon in sample:
             matches += 1
     return matches
+
+# Method to search dna file and give number of matches
+def search_dna(dna_file):
+    sample = input("Enter condon samples(e.g AAA, TTT, GGG): ")
+    dna_data = read_dna(dna_file)
+    if read_dna.exist:
+        sequence = re.findall(sample, dna_data)
+        matches = len(sequence)
+        print(sequence)
+        print(matches)
+        chosen_matches = input("Minimum number of matches for investigation: ")
+        if (chosen_matches.isdigit()) ==  True:
+            chosen_matches = int(chosen_matches)
+            if matches >= chosen_matches:
+                data = "%s matches found. Carry on the investigation." % (matches)
+                print(data)
+                write_file(data)
+            else:
+                print("%s matches found. Free the suspect." % (matches))            
+        else:
+            print("Invalid input. Not an integer.") 
+    else:
+        print("File does not exist.")
 
 ######################
 ## Analysis Methods ##
