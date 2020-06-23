@@ -78,12 +78,15 @@ def match_dna(dna):
     return matches
 
 # Regex method to search dna file and give number of matches
-def search_dna(dna_file):
-    sample = input("Enter condon samples(e.g AAA, TTT, GGG): ")
+def search_dna(dna_file):    
     dna_data = read_dna(dna_file)
-    if read_dna.exist:
+    if read_dna.exist == True:        
+        sample = ""
+        sample = input("Enter codon sample(e.g AAA, TTT, GGG): ")
+        print(sample)
         sequence = re.findall(sample, dna_data)
         matches = len(sequence)
+        print(matches)
         chosen_matches = input("Minimum number of matches for investigation: ")
         if (chosen_matches.isdigit()) ==  True:
             chosen_matches = int(chosen_matches)
@@ -100,8 +103,9 @@ def search_dna(dna_file):
 ## Analysis Methods ##
 ######################
 
+
 # Method to check whether sample matches suspect DNA
-#def is_criminal(dna_file):
+def is_criminal(dna_file):
     dna_data = read_dna(dna_file)
     if read_dna.exist == True:
         condons = dna_condons(dna_data)
@@ -119,7 +123,7 @@ def search_dna(dna_file):
             print("Invalid input. Not an integer.")
     else:
         print("File does not exist.")
-    
+
 # Method for DNA replication
 def replication(dna_strand):
     print("Starting replication process..")
@@ -268,46 +272,54 @@ def transcription(dna_strand):
 def translation(dna_file):
     dna_data = read_dna(dna_file)
     if read_dna.exist:
-        string = re.search("AUG", dna_data)
-        begin = string.span()[0]
-        new_string = dna_data[begin:]
-        codons = re.findall("(\w{3})", new_string)
-        print(codons)
+        t_search = re.findall("T", dna_data)
+        print(t_search)
+        if t_search == []:
+            string = re.search("AUG", dna_data)
+            begin = string.span()[0]
+            new_string = dna_data[begin:]
+            codons = re.findall("(\w{3})", new_string)
+            print(codons)
 
-        # mRNA condons corresponding to Amino acid
-        AA_dict = {
-                "UUU": "Phe", "UUC": "Phe", "UUA": "Leu", "UUG": "Leu",
-                "UCU": "Ser", "UCC": "Ser", "UCA": "Ser", "UCG": "Ser",
-                "UAU": "Tyr", "UAC": "Tyr", "UAA": "Stop", "UAG": "Stop",
-                "UGU": "Cys", "UGC": "Cys", "UGA": "Stop", "UGG": "Trp",
-                "CUU": "Leu", "CUC": "Leu", "CUA": "Leu", "CUG": "Leu",
-                "CCU": "Pro", "CCC": "Pro", "CCA": "Pro", "CCG": "Pro",
-                "CAU": "His", "CAC": "His", "CAA": "Gln", "CAG": "Gln",
-                "CGU": "Arg", "CGC": "Arg", "CGA": "Arg", "CGG": "Arg",
-                "AUU": "Ile", "AUC": "Ile", "AUA": "Ile", "AUG": "Met",
-                "ACU": "Thr", "ACC": "Thr", "ACA": "Thr", "ACG": "Thr",
-                "AAU": "Asn", "AAC": "Asn", "AAA": "Lys", "AAG": "Lys",
-                "AGU": "Ser", "AGC": "Ser", "AGA": "Arg", "AGG": "Arg",
-                "GUU": "Val", "GUC": "Val", "GUA": "Val", "GUG": "Val",
-                "GCU": "Ala", "GCC": "Ala", "GCA": "Ala", "GCG": "Ala",
-                "GAU": "Asp", "GAC": "Asp", "GAA": "Glu", "GAG": "Glu",
-                "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly"
-                }
+            # mRNA condons corresponding to Amino acid
+            AA_dict = {
+                    "UUU": "Phe", "UUC": "Phe", "UUA": "Leu", "UUG": "Leu",
+                    "UCU": "Ser", "UCC": "Ser", "UCA": "Ser", "UCG": "Ser",
+                    "UAU": "Tyr", "UAC": "Tyr", "UAA": "Stop", "UAG": "Stop",
+                    "UGU": "Cys", "UGC": "Cys", "UGA": "Stop", "UGG": "Trp",
+                    "CUU": "Leu", "CUC": "Leu", "CUA": "Leu", "CUG": "Leu",
+                    "CCU": "Pro", "CCC": "Pro", "CCA": "Pro", "CCG": "Pro",
+                    "CAU": "His", "CAC": "His", "CAA": "Gln", "CAG": "Gln",
+                    "CGU": "Arg", "CGC": "Arg", "CGA": "Arg", "CGG": "Arg",
+                    "AUU": "Ile", "AUC": "Ile", "AUA": "Ile", "AUG": "Met",
+                    "ACU": "Thr", "ACC": "Thr", "ACA": "Thr", "ACG": "Thr",
+                    "AAU": "Asn", "AAC": "Asn", "AAA": "Lys", "AAG": "Lys",
+                    "AGU": "Ser", "AGC": "Ser", "AGA": "Arg", "AGG": "Arg",
+                    "GUU": "Val", "GUC": "Val", "GUA": "Val", "GUG": "Val",
+                    "GCU": "Ala", "GCC": "Ala", "GCA": "Ala", "GCG": "Ala",
+                    "GAU": "Asp", "GAC": "Asp", "GAA": "Glu", "GAG": "Glu",
+                    "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly"
+                    }
 
-        AA = ""
-        for codon in codons:
-            x = AA_dict.get(codon)
-            if x != "Stop":
-                AA += (x + " ")
-            else:
-                break
+            AA = ""
+            for codon in codons:
+                x = AA_dict.get(codon)
+                if x != "Stop":
+                    AA += (x + " ")
+                else:
+                    break
 
-        print(AA)
-        write_file(AA)
-        # Need to check for length incase a codon cant be made
+            print(AA)
+            write_file(AA)
+            # Need to check for length incase a codon cant be made
         
+        else:
+            print("This is a DNA file not mRNA!")
+
     else:
         print("File is invalid.")
+    
+    
 
 # Method to create a single strand of DNA with a given numebr of bases
 def create_dna(total):    
@@ -350,7 +362,7 @@ def mutation(dna_strand):
 
 def welcome():
     print("############################################")
-    print("##### DNA Lab Analysis -- Version 2.13 #####")
+    print("##### DNA Lab Analysis -- Version 1.2 #####")
     print("############################################")
     print("############################################")
     print("##### Welcome to the DNA lab! ##############")
@@ -375,8 +387,7 @@ def start_analysis():
             print("DNA Match")
             sleep(5)
             dna_file = input("Enter suspect DNA file: ")
-            #is_criminal(dna_file)
-            search_dna(dna_file)
+            is_criminal(dna_file)
             sleep(5)
         elif user_choice == "2":
             print("DNA Replication")
