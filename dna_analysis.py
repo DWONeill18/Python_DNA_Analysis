@@ -76,6 +76,10 @@ def match_dna(dna):
         if condon in sample:
             matches += 1
     return matches
+    
+######################
+## Analysis Methods ##
+######################
 
 # Regex method to search dna file and give number of matches
 def search_dna(dna_file):    
@@ -84,6 +88,7 @@ def search_dna(dna_file):
         sample = ""
         sample = input("Enter codon sample(e.g AAA, TTT, GGG): ")
         print(sample)
+        # regex to search all sample codon from read file
         sequence = re.findall(sample, dna_data)
         matches = len(sequence)
         print(matches)
@@ -98,11 +103,6 @@ def search_dna(dna_file):
                 print("%s matches found. Free the suspect." % (matches))            
         else:
             print("Invalid input. Not an integer.") 
-    
-######################
-## Analysis Methods ##
-######################
-
 
 # Method to check whether sample matches suspect DNA
 def is_criminal(dna_file):
@@ -272,10 +272,12 @@ def transcription(dna_strand):
 def translation(dna_file):
     dna_data = read_dna(dna_file)
     if read_dna.exist:
+        # if T's in file then it's RNA
         t_search = re.findall("T", dna_data)
-        print(t_search)
         if t_search == []:
+            # search for start codon "AUG"
             string = re.search("AUG", dna_data)
+            # start DNA sequence from here
             begin = string.span()[0]
             new_string = dna_data[begin:]
             codons = re.findall("(\w{3})", new_string)
@@ -308,19 +310,13 @@ def translation(dna_file):
                     AA += (x + " ")
                 else:
                     break
-
             print(AA)
             write_file(AA)
-            # Need to check for length incase a codon cant be made
-        
         else:
             print("This is a DNA file not mRNA!")
-
     else:
         print("File is invalid.")
     
-    
-
 # Method to create a single strand of DNA with a given numebr of bases
 def create_dna(total):    
     total = int(total)
